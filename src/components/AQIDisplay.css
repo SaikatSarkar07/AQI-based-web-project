@@ -1,0 +1,621 @@
+.aqi-display {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 25px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  animation: fadeInScale 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-bottom: 25px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.aqi-display::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  animation: shimmer 4s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.location-header {
+  text-align: center;
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 3px solid #f0f0f0;
+  position: relative;
+}
+
+.location-header::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+.location-header h2 {
+  color: #333;
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  from { filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.3)); }
+  to { filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.5)); }
+}
+
+.last-updated {
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+/* AQI Visual Section */
+.aqi-visual-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 45px;
+  align-items: center;
+}
+
+.aqi-image-container {
+  position: relative;
+  border-radius: 25px;
+  overflow: hidden;
+  height: 350px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  animation: slideInLeft 1s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.aqi-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.5s ease;
+}
+
+.aqi-image.aqi-good {
+  filter: brightness(1.1) saturate(1.2) hue-rotate(10deg);
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.aqi-image.aqi-moderate {
+  filter: brightness(1.05) saturate(1.1) sepia(0.1);
+  animation: gentlePulse 3s ease-in-out infinite;
+}
+
+.aqi-image.aqi-sensitive {
+  filter: brightness(0.95) saturate(1.3) hue-rotate(-10deg) sepia(0.2);
+  animation: warningPulse 2.5s ease-in-out infinite;
+}
+
+.aqi-image.aqi-unhealthy {
+  filter: brightness(0.9) saturate(1.4) hue-rotate(-20deg) sepia(0.3);
+  animation: dangerPulse 2s ease-in-out infinite;
+}
+
+.aqi-image.aqi-very-unhealthy {
+  filter: brightness(0.8) saturate(1.5) hue-rotate(-30deg) sepia(0.4) contrast(1.1);
+  animation: severePulse 1.5s ease-in-out infinite;
+}
+
+.aqi-image.aqi-hazardous {
+  filter: brightness(0.7) saturate(1.6) hue-rotate(-40deg) sepia(0.5) contrast(1.2);
+  animation: hazardousPulse 1s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); filter: brightness(1.1) saturate(1.2) hue-rotate(10deg); }
+  50% { transform: scale(1.02); filter: brightness(1.15) saturate(1.25) hue-rotate(15deg); }
+}
+
+@keyframes gentlePulse {
+  0%, 100% { transform: scale(1); filter: brightness(1.05) saturate(1.1) sepia(0.1); }
+  50% { transform: scale(1.01); filter: brightness(1.08) saturate(1.15) sepia(0.15); }
+}
+
+@keyframes warningPulse {
+  0%, 100% { transform: scale(1); filter: brightness(0.95) saturate(1.3) hue-rotate(-10deg) sepia(0.2); }
+  50% { transform: scale(1.015); filter: brightness(0.98) saturate(1.35) hue-rotate(-15deg) sepia(0.25); }
+}
+
+@keyframes dangerPulse {
+  0%, 100% { transform: scale(1); filter: brightness(0.9) saturate(1.4) hue-rotate(-20deg) sepia(0.3); }
+  50% { transform: scale(1.02); filter: brightness(0.93) saturate(1.45) hue-rotate(-25deg) sepia(0.35); }
+}
+
+@keyframes severePulse {
+  0%, 100% { transform: scale(1); filter: brightness(0.8) saturate(1.5) hue-rotate(-30deg) sepia(0.4) contrast(1.1); }
+  50% { transform: scale(1.025); filter: brightness(0.83) saturate(1.55) hue-rotate(-35deg) sepia(0.45) contrast(1.15); }
+}
+
+@keyframes hazardousPulse {
+  0%, 100% { transform: scale(1); filter: brightness(0.7) saturate(1.6) hue-rotate(-40deg) sepia(0.5) contrast(1.2); }
+  50% { transform: scale(1.03); filter: brightness(0.73) saturate(1.65) hue-rotate(-45deg) sepia(0.55) contrast(1.25); }
+}
+
+.aqi-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.aqi-overlay-good {
+  background: linear-gradient(45deg, rgba(0, 228, 0, 0.1) 0%, rgba(0, 255, 0, 0.05) 100%);
+}
+
+.aqi-overlay-moderate {
+  background: linear-gradient(45deg, rgba(255, 255, 0, 0.15) 0%, rgba(255, 200, 0, 0.1) 100%);
+}
+
+.aqi-overlay-sensitive {
+  background: linear-gradient(45deg, rgba(255, 126, 0, 0.2) 0%, rgba(255, 100, 0, 0.15) 100%);
+}
+
+.aqi-overlay-unhealthy {
+  background: linear-gradient(45deg, rgba(255, 0, 0, 0.25) 0%, rgba(255, 50, 50, 0.2) 100%);
+}
+
+.aqi-overlay-very-unhealthy {
+  background: linear-gradient(45deg, rgba(143, 63, 151, 0.3) 0%, rgba(120, 40, 130, 0.25) 100%);
+}
+
+.aqi-overlay-hazardous {
+  background: linear-gradient(45deg, rgba(126, 0, 35, 0.4) 0%, rgba(100, 0, 20, 0.35) 100%);
+}
+
+.aqi-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.4), transparent);
+  background-repeat: repeat;
+  background-size: 150px 100px;
+  animation: floatParticles 15s linear infinite;
+}
+
+@keyframes floatParticles {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-100px); }
+}
+
+.aqi-main-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 25px;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+  position: relative;
+  overflow: hidden;
+  animation: slideInRight 1s ease-out 0.3s both;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.aqi-main-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  animation: sweep 3s infinite;
+  pointer-events: none;
+}
+
+@keyframes sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.aqi-circle {
+  width: 180px;
+  height: 180px;
+  border: 10px solid;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  position: relative;
+  animation: rotateIn 1s ease-out;
+  z-index: 1;
+}
+
+@keyframes rotateIn {
+  from {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.aqi-circle::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, currentColor 0%, currentColor 25%, transparent 25%, transparent 100%);
+  animation: spin 3s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.aqi-value {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  animation: countUp 2s ease-out;
+}
+
+@keyframes countUp {
+  from { 
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.aqi-label {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: 8px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.aqi-info {
+  text-align: center;
+  z-index: 1;
+  position: relative;
+}
+
+.aqi-info h3 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  font-weight: 800;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  animation: slideInUp 1s ease-out 0.5s both;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aqi-info p {
+  color: #666;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  max-width: 350px;
+  line-height: 1.5;
+  font-weight: 500;
+  animation: fadeIn 1s ease-out 0.7s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.main-pollutant {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  font-weight: 600;
+  animation: slideInUp 1s ease-out 0.9s both;
+}
+
+.aqi-scale {
+  margin-bottom: 35px;
+}
+
+.aqi-scale h4 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.scale-bars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.scale-bar {
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  animation: slideInUp 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+.scale-bar:nth-child(1) { animation-delay: 0.1s; }
+.scale-bar:nth-child(2) { animation-delay: 0.2s; }
+.scale-bar:nth-child(3) { animation-delay: 0.3s; }
+.scale-bar:nth-child(4) { animation-delay: 0.4s; }
+.scale-bar:nth-child(5) { animation-delay: 0.5s; }
+.scale-bar:nth-child(6) { animation-delay: 0.6s; }
+
+.scale-bar:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.scale-bar span:first-child {
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.scale-bar span:last-child {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.weather-info {
+  margin-bottom: 35px;
+}
+
+.weather-info h4 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.weather-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+}
+
+.weather-item {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255,255,255,0.5);
+  animation: slideInUp 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+.weather-item:nth-child(1) { animation-delay: 0.2s; }
+.weather-item:nth-child(2) { animation-delay: 0.3s; }
+.weather-item:nth-child(3) { animation-delay: 0.4s; }
+.weather-item:nth-child(4) { animation-delay: 0.5s; }
+
+.weather-item:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.weather-label {
+  display: block;
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.weather-value {
+  display: block;
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.health-recommendations {
+  background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+  padding: 25px;
+  border-radius: 20px;
+  border-left: 6px solid #2196f3;
+  box-shadow: 0 8px 25px rgba(33, 150, 243, 0.15);
+  animation: slideInUp 1s ease-out 1.2s both;
+}
+
+.health-recommendations h4 {
+  color: #333;
+  margin-bottom: 18px;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.recommendations p {
+  margin: 0;
+  line-height: 1.7;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #444;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .aqi-visual-section {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .aqi-image-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .aqi-display {
+    padding: 25px 20px;
+  }
+  
+  .location-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .aqi-visual-section {
+    gap: 25px;
+  }
+  
+  .aqi-image-container {
+    height: 250px;
+  }
+  
+  .aqi-main-card {
+    padding: 25px;
+  }
+  
+  .aqi-circle {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .aqi-value {
+    font-size: 2.8rem;
+  }
+  
+  .aqi-info h3 {
+    font-size: 1.6rem;
+  }
+  
+  .scale-bars {
+    grid-template-columns: 1fr;
+  }
+  
+  .weather-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .aqi-display {
+    padding: 20px 15px;
+  }
+  
+  .location-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .aqi-image-container {
+    height: 200px;
+  }
+  
+  .aqi-circle {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .aqi-value {
+    font-size: 2.2rem;
+  }
+  
+  .aqi-info h3 {
+    font-size: 1.4rem;
+  }
+  
+  .weather-grid {
+    grid-template-columns: 1fr;
+  }
+}

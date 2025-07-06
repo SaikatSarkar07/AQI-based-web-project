@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Air Quality & UV Monitor</title>
+    <meta name="description" content="Check real-time air quality index and UV levels for any location worldwide with smart health alerts." />
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#667eea" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="AQI Monitor" />
+    
+    <!-- iOS Icons -->
+    <link rel="apple-touch-icon" href="/vite.svg" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/vite.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/vite.svg" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/vite.svg" />
+    
+    <!-- Android Icons -->
+    <link rel="icon" type="image/svg+xml" sizes="192x192" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" sizes="512x512" href="/vite.svg" />
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#667eea" />
+    <meta name="msapplication-TileImage" content="/vite.svg" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="AQI Monitor - Air Quality Index" />
+    <meta property="og:description" content="Check real-time air quality index for any location worldwide with smart health alerts." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/vite.svg" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="AQI Monitor" />
+    <meta name="twitter:description" content="Real-time air quality monitoring with health alerts" />
+    <meta name="twitter:image" content="/vite.svg" />
+    
+    <!-- Performance optimizations -->
+    <link rel="preconnect" href="https://api.airvisual.com" />
+    <link rel="preconnect" href="https://images.pexels.com" />
+    <link rel="dns-prefetch" href="https://www.amazon.com" />
+    
+    <!-- Prevent zoom on iOS -->
+    <meta name="format-detection" content="telephone=no" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
