@@ -27,7 +27,7 @@ function App() {
 
   try {
     // Construct the IQAir URL
-    const iqAirUrl = `https://api.airvisual.com/v2/city?city=${encodeURIComponent(city)}&state=${encodeURIComponent(state)}&country=${encodeURIComponent(country)}&key=${IQAIR_API_KEY}`
+    const iqAirUrl = `https://api.airvisual.com/v2/citycity=${encodeURIComponent(city)}&state=${encodeURIComponent(state)}&country=${encodeURIComponent(country)}&key=${IQAIR_API_KEY}`
 
     console.log('IQAir URL:', iqAirUrl)
     const response = await fetch(iqAirUrl)
