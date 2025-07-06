@@ -50,12 +50,12 @@ function App() {
       // Add any extra data here as needed
     }
     
-    setWeatherData(combinedData)  // You might want to rename weatherData to something more generic, like airData
+    setAqiData(combinedData)
     checkForAlerts(combinedData)
   } catch (err) {
     console.error('Error fetching AQI data:', err)
     setError(err.message)
-    setWeatherData(null)
+    setAqiData(null)
   } finally {
     setLoading(false)
   }
